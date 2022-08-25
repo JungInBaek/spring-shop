@@ -19,7 +19,7 @@ public class Item {
     private Long id;                        //  상품 코드
 
     @Column(nullable = false, length = 50)
-    private String itemNm;                  //  상품명
+    private String itemName;                  //  상품명
 
     @Column(nullable = false)
     private int price;                      //  가격
@@ -37,4 +37,18 @@ public class Item {
     private LocalDateTime regTime;          //  등록 시간
 
     private LocalDateTime updateTime;       //  수정 시간
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", itemName='" + itemName + '\'' +
+                ", price=" + price +
+                ", stockNumber=" + stockNumber +
+                ", itemDetail='" + itemDetail + '\'' +
+                ", itemSellStatus=" + itemSellStatus +
+                ", regTime=" + regTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }
