@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -115,4 +118,33 @@ class ItemRepositoryTest {
         //  then
         assertThat(itemList.size()).isEqualTo(5);
     }
+
+    @Test
+    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    public void findByItemDetailTest() throws Exception {
+        //  given
+        this.createItemList();
+
+        //  when
+        List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
+
+        //  then
+        assertThat(itemList.size()).isEqualTo(10);
+        assertThat(itemList.get(1).getPrice()).isGreaterThan(itemList.get(2).getPrice()).isLessThan(itemList.get(0).getPrice());
+    }
+
+    @Test
+    @DisplayName("nativeQuery 속성을 이용한 상품 조회 테스트")
+    public void findByItemDetailByNative() throws Exception {
+        //  given
+        this.createItemList();
+
+        //  when
+        List<Item> itemList = itemRepository.findByItemDetailByNative("테스트 상품 상세 설명");
+
+        //  then
+        assertThat(itemList.size()).isEqualTo(10);
+        assertThat(itemList.get(1).getPrice()).isGreaterThan(itemList.get(2).getPrice()).isLessThan(itemList.get(0).getPrice());
+    }
+
 }
