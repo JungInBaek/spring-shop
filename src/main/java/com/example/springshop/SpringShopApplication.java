@@ -12,9 +12,4 @@ public class SpringShopApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringShopApplication.class, args);
     }
-
-    @GetMapping("/")
-    public String helloWord() {
-        return "<h1>Hello World!</h1>";
-    }
 }
