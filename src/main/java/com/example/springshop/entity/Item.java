@@ -1,7 +1,9 @@
 package com.example.springshop.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,10 +11,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @Entity
-public class Item {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Item extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
@@ -34,9 +36,20 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;  //  상품 판매 상태
 
-    private LocalDateTime regTime;          //  등록 시간
+//    private LocalDateTime regTime;          //  등록 시간
+//
+//    private LocalDateTime updateTime;       //  수정 시간
 
-    private LocalDateTime updateTime;       //  수정 시간
+    protected Item(String itemName, int price, int stockNumber, String itemDetail,
+                   ItemSellStatus itemSellStatus) {
+        this.itemName = itemName;
+        this.price = price;
+        this.stockNumber = stockNumber;
+        this.itemDetail = itemDetail;
+        this.itemSellStatus = itemSellStatus;
+//        this.regTime = regTime;
+//        this.updateTime = updateTime;
+    }
 
     @Override
     public String toString() {
@@ -47,8 +60,22 @@ public class Item {
                 ", stockNumber=" + stockNumber +
                 ", itemDetail='" + itemDetail + '\'' +
                 ", itemSellStatus=" + itemSellStatus +
-                ", regTime=" + regTime +
-                ", updateTime=" + updateTime +
+//                ", regTime=" + regTime +
+//                ", updateTime=" + updateTime +
                 '}';
+    }
+
+    public static Item createItem(String itemName, int price, int stockNumber, String itemDetail,
+                                  ItemSellStatus itemSellStatus) {
+        return new Item(itemName, price, stockNumber, itemDetail, itemSellStatus);
+    }
+
+    public void updateItem(String itemName, int price, int stockNumber, String itemDetail,
+                                  ItemSellStatus itemSellStatus) {
+        this.itemName = itemName;
+        this.price = price;
+        this.stockNumber = stockNumber;
+        this.itemDetail = itemDetail;
+        this.itemSellStatus = itemSellStatus;
     }
 }

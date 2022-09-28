@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,6 +27,10 @@ public class ItemRepository2 {
     public List<Item> findAll() {
         return em.createQuery("select i from Item i", Item.class)
                 .getResultList();
+    }
+
+    public Optional<Item> findById(Long itemId) {
+        return Optional.of(em.find(Item.class, itemId));
     }
 
     public List<Item> findByItemName(String itemName) {

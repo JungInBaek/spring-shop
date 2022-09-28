@@ -33,4 +33,13 @@ public class MemberRepository {
                 .setParameter("email", email)
                 .getResultList();
     }
+
+    public Optional<Member> findById(Long memberId) {
+        Member member = em.createQuery(
+                        "select m from Member m " +
+                                "where m.id = :id", Member.class)
+                .setParameter("id", memberId)
+                .getResultList().get(0);
+        return Optional.of(member);
+    }
 }

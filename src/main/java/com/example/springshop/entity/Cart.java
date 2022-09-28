@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "cart")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Cart {
+public class Cart extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cart_id")

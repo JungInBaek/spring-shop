@@ -1,7 +1,9 @@
 package com.example.springshop.entity;
 
 import com.example.springshop.constant.OrderStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "orders")
-public class Order {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,10 +30,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private LocalDateTime regTime;
-
-    private LocalDateTime updateTime;
+    protected Order(Member member) {
+        this.member = member;
+    }
 }

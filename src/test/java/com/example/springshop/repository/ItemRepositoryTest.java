@@ -30,14 +30,7 @@ class ItemRepositoryTest {
     @DisplayName("상품 저장 테스트")
     public void createItemTest() throws Exception {
         //  given
-        Item item = new Item();
-        item.setItemName("테스트 상품");
-        item.setPrice(10000);
-        item.setItemDetail("테스트 상품 상세 설명");
-        item.setItemSellStatus(ItemSellStatus.SELL);
-        item.setStockNumber(100);
-        item.setRegTime(LocalDateTime.now());
-        item.setUpdateTime(LocalDateTime.now());
+        Item item = Item.createItem("테스트 상품", 10000, 100, "테스트 상품 상세 설명", ItemSellStatus.SELL);
 
         //  when
         Item savedItem = itemRepository.save(item);
@@ -48,15 +41,7 @@ class ItemRepositoryTest {
 
     private void createItemList() {
         for (int i = 0; i < 10; i++) {
-            Item item = new Item();
-            item.setItemName("테스트 상품" + i);
-            item.setPrice(10000 + i);
-            item.setItemDetail("테스트 상품 상세 설명" + i);
-            item.setItemSellStatus(ItemSellStatus.SELL);
-            item.setStockNumber(100);
-            item.setRegTime(LocalDateTime.now());
-            item.setUpdateTime(LocalDateTime.now());
-            item.setUpdateTime(LocalDateTime.now());
+            Item item = Item.createItem("테스트 상품" + i, 10000 + i, 100, "테스트 상품 상세 설명" + i, ItemSellStatus.SELL);
             itemRepository.save(item);
         }
     }
