@@ -1,7 +1,7 @@
 package com.example.springshop.service;
 
 import com.example.springshop.dto.MemberFormDto;
-import com.example.springshop.entity.Member;
+import com.example.springshop.constant.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

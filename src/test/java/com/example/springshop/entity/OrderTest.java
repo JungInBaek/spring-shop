@@ -1,6 +1,10 @@
 package com.example.springshop.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
+import com.example.springshop.constant.entity.Item;
+import com.example.springshop.constant.entity.Member;
+import com.example.springshop.constant.entity.Order;
+import com.example.springshop.constant.entity.OrderItem;
 import com.example.springshop.repository.ItemRepository;
 import com.example.springshop.repository.MemberRepository;
 import com.example.springshop.repository.OrderItemRepository;
@@ -15,9 +19,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

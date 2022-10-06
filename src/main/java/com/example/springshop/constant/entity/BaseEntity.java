@@ -1,4 +1,4 @@
-package com.example.springshop.entity;
+package com.example.springshop.constant.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
@@ -16,7 +16,7 @@ public abstract class BaseEntity extends BaseTimeEntity {
 
     @CreatedBy
     @Column(updatable = false)
-    private String createBy;
+    private String createdBy;
 
     @LastModifiedBy
     private String modifiedBy;

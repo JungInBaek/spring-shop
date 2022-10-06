@@ -2,11 +2,15 @@ package com.example.springshop.service;
 
 import com.example.springshop.dto.ItemFormDto;
 import com.example.springshop.dto.ItemImgDto;
-import com.example.springshop.entity.Item;
-import com.example.springshop.entity.ItemImg;
+import com.example.springshop.dto.ItemSearchDto;
+import com.example.springshop.constant.entity.Item;
+import com.example.springshop.constant.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
 import com.example.springshop.repository.ItemRepository2;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,7 +51,7 @@ public class ItemService {
         //  상품 수정
         Item item = itemRepository.findById(itemFormDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
-        item.updateItem(item.getItemName(), item.getPrice(), item.getStockNumber(), item.getItemDetail(), item.getItemSellStatus());
+        item.updateItem(itemFormDto);
 
         List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
@@ -73,5 +77,10 @@ public class ItemService {
         ItemFormDto itemFormDto = ItemFormDto.of(item);
         itemFormDto.setItemImgDtoList(itemImgDtoList);
         return itemFormDto;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 }

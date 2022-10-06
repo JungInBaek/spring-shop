@@ -1,6 +1,6 @@
 package com.example.springshop.service;
 
-import com.example.springshop.entity.ItemImg;
+import com.example.springshop.constant.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

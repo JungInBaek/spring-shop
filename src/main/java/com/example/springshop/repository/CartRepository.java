@@ -1,6 +1,6 @@
 package com.example.springshop.repository;
 
-import com.example.springshop.entity.Cart;
+import com.example.springshop.constant.entity.Cart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

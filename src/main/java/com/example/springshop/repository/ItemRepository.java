@@ -1,6 +1,6 @@
 package com.example.springshop.repository;
 
-import com.example.springshop.entity.Item;
+import com.example.springshop.constant.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

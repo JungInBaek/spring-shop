@@ -1,4 +1,4 @@
-package com.example.springshop.entity;
+package com.example.springshop.constant.entity;
 
 import com.example.springshop.constant.Role;
 import com.example.springshop.dto.MemberFormDto;

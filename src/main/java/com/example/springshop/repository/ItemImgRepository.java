@@ -1,7 +1,6 @@
 package com.example.springshop.repository;
 
-import com.example.springshop.entity.ItemImg;
-import lombok.Getter;
+import com.example.springshop.constant.entity.ItemImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

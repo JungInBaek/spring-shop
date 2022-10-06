@@ -1,5 +1,7 @@
 package com.example.springshop.entity;
 
+import com.example.springshop.constant.entity.Cart;
+import com.example.springshop.constant.entity.Member;
 import com.example.springshop.dto.MemberFormDto;
 import com.example.springshop.repository.CartRepository;
 import com.example.springshop.repository.MemberRepository;

@@ -1,15 +1,12 @@
-package com.example.springshop.entity;
+package com.example.springshop.constant.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
+import com.example.springshop.dto.ItemFormDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -70,12 +67,11 @@ public class Item extends BaseEntity {
         return new Item(itemName, price, stockNumber, itemDetail, itemSellStatus);
     }
 
-    public void updateItem(String itemName, int price, int stockNumber, String itemDetail,
-                                  ItemSellStatus itemSellStatus) {
-        this.itemName = itemName;
-        this.price = price;
-        this.stockNumber = stockNumber;
-        this.itemDetail = itemDetail;
-        this.itemSellStatus = itemSellStatus;
+    public void updateItem(ItemFormDto itemFormDto) {
+        this.itemName = itemFormDto.getItemName();
+        this.price = itemFormDto.getPrice();
+        this.stockNumber = itemFormDto.getStockNumber();
+        this.itemDetail = itemFormDto.getItemDetail();
+        this.itemSellStatus = itemFormDto.getItemSellStatus();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.springshop.entity;
+package com.example.springshop.constant.entity;
 
 import lombok.Getter;
 import lombok.Setter;
