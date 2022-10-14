@@ -1,4 +1,4 @@
-package com.example.springshop.constant.entity;
+package com.example.springshop.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

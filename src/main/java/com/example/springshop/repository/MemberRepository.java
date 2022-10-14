@@ -1,11 +1,12 @@
 package com.example.springshop.repository;
 
-import com.example.springshop.constant.entity.Member;
+import com.example.springshop.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -14,9 +15,9 @@ public class MemberRepository {
 
     private final EntityManager em;
 
-    public Long save(Member member) {
+    public Member save(Member member) {
         em.persist(member);
-        return member.getId();
+        return member;
     }
 
     public Member findOne(Long memberId) {
@@ -28,10 +29,17 @@ public class MemberRepository {
                 .getResultList();
     }
 
-    public List<Member> findByEmail(String email) {
-        return em.createQuery("select m from Member m where m.email = :email", Member.class)
-                .setParameter("email", email)
-                .getResultList();
+    public Member findByEmail(String email) {
+        Member findMember;
+        try {
+            findMember = em.createQuery("select m from Member m where m.email = :email", Member.class)
+                    .setParameter("email", email)
+                    .getResultList().stream().findAny().get();
+        } catch(NoSuchElementException e) {
+            findMember = null;
+        }
+
+        return findMember;
     }
 
     public Optional<Member> findById(Long memberId) {

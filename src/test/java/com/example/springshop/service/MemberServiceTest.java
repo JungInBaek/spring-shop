@@ -1,7 +1,7 @@
 package com.example.springshop.service;
 
 import com.example.springshop.dto.MemberFormDto;
-import com.example.springshop.constant.entity.Member;
+import com.example.springshop.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,8 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -36,10 +37,15 @@ class MemberServiceTest {
     @Test
     @DisplayName("회원가입 테스트")
     public void saveMemberTest() {
-        Member member = createMember();
-        Long memberId = memberService.saveMember(member);
+        Member member = this.createMember();
+        Member savedMember = memberService.saveMember(member);
 
-        assertEquals(member.getId(), memberId);
+        assertEquals(member.getId(), savedMember.getId());
+        assertEquals(member.getEmail(), savedMember.getEmail());
+        assertEquals(member.getName(), savedMember.getName());
+        assertEquals(member.getAddress(), savedMember.getAddress());
+        assertEquals(member.getPassword(), savedMember.getPassword());
+        assertEquals(member.getRole(), savedMember.getRole());
     }
 
     @Test
@@ -49,7 +55,9 @@ class MemberServiceTest {
         Member member2 = createMember();
         memberService.saveMember(member1);
 
-        Throwable e = assertThrows(IllegalStateException.class, () -> memberService.saveMember(member2));
+        Throwable e = assertThrows(IllegalStateException.class, () -> {
+            memberService.saveMember(member2);
+        });
 
         assertEquals("이미 가입된 회원입니다.", e.getMessage());
     }

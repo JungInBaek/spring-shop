@@ -1,4 +1,4 @@
-package com.example.springshop.constant.entity;
+package com.example.springshop.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,6 +27,11 @@ public class OrderItem extends BaseEntity {
 
     private int count;
 
+    protected OrderItem(Item item, int count) {
+        this.item = item;
+        this.count = count;
+    }
+
     protected OrderItem(Order order, Item item, int orderPrice, int count) {
         this.order = order;
         this.item = item;
@@ -34,7 +39,24 @@ public class OrderItem extends BaseEntity {
         this.count = count;
     }
 
+    //  테스트용
     public static OrderItem createOrderItem(Order order, Item item, int orderPrice, int count) {
         return new OrderItem(order, item, orderPrice, count);
+    }
+
+    public static OrderItem createOrderItem(Item item, int count) {
+        OrderItem orderItem = new OrderItem(item, count);
+        orderItem.orderPrice = item.getPrice();
+        item.removeStock(count);
+
+        return orderItem;
+    }
+
+    public int getTotalPrice() {
+        return orderPrice * count;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

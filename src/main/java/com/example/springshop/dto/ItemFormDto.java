@@ -1,7 +1,7 @@
 package com.example.springshop.dto;
 
 import com.example.springshop.constant.ItemSellStatus;
-import com.example.springshop.constant.entity.Item;
+import com.example.springshop.entity.Item;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;

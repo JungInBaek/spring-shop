@@ -3,13 +3,14 @@ package com.example.springshop.service;
 import com.example.springshop.dto.ItemFormDto;
 import com.example.springshop.dto.ItemImgDto;
 import com.example.springshop.dto.ItemSearchDto;
-import com.example.springshop.constant.entity.Item;
-import com.example.springshop.constant.entity.ItemImg;
+import com.example.springshop.dto.MainItemDto;
+import com.example.springshop.entity.Item;
+import com.example.springshop.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
 import com.example.springshop.repository.ItemRepository2;
+import com.example.springshop.repository.ItemRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
 
+    private final ItemRepositoryCustom itemRepositoryCustom;
     private final ItemRepository2 itemRepository;
     private final ItemImgRepository itemImgRepository;
     private final ItemImgService itemImgService;
@@ -81,6 +83,11 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
-        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
+        return itemRepositoryCustom.getAdminItemPage(itemSearchDto, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepositoryCustom.getMainItemPage(itemSearchDto, pageable);
     }
 }

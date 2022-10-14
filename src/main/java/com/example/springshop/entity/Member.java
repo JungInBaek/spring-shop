@@ -1,4 +1,4 @@
-package com.example.springshop.constant.entity;
+package com.example.springshop.entity;
 
 import com.example.springshop.constant.Role;
 import com.example.springshop.dto.MemberFormDto;
@@ -48,6 +48,12 @@ public class Member extends BaseEntity {
 //                Role.USER);
 //        return member;
 //    }
+
+    public static Member createMember(String email) {
+        Member member = new Member();
+        member.email = email;
+        return member;
+    }
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
         Member member = new Member(

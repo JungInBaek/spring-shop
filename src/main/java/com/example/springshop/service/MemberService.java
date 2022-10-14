@@ -1,6 +1,6 @@
 package com.example.springshop.service;
 
-import com.example.springshop.constant.entity.Member;
+import com.example.springshop.entity.Member;
 import com.example.springshop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -10,7 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -18,33 +21,30 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    public Long saveMember(Member member) {
+    public Member saveMember(Member member) {
         validateDuplicateMember(member);
         return memberRepository.save(member);
     }
 
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByEmail(member.getEmail());
-        if (findMembers.size() > 0) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
-//        for (Member findMember : findMembers) {
-//            if (findMember != null) {
-//                throw new IllegalStateException("이미 가입된 회원입니다.");
-//            }
-//        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        List<Member> findMembers = memberRepository.findByEmail(email);
-        if (findMembers.size() == 0) {
+        Member member = memberRepository.findByEmail(email);
+
+        if(member == null){
             throw new UsernameNotFoundException(email);
         }
+
         return User.builder()
-                .username(findMembers.get(0).getEmail())
-                .password(findMembers.get(0).getPassword())
-                .roles(findMembers.get(0).getRole().toString())
+                .username(member.getEmail())
+                .password(member.getPassword())
+                .roles(member.getRole().toString())
                 .build();
     }
 }

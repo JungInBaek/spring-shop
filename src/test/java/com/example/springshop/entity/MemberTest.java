@@ -1,6 +1,5 @@
 package com.example.springshop.entity;
 
-import com.example.springshop.constant.entity.Member;
 import com.example.springshop.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,7 @@ class MemberTest {
 
         System.out.println("member.getRegTime() = " + member.getRegTime());
         System.out.println("member.getUpdateTime() = " + member.getUpdateTime());
-        System.out.println("member.getCreateBy() = " + member.getCreateBy());
+        System.out.println("member.getCreateBy() = " + member.getCreatedBy());
         System.out.println("member.getModifiedBy() = " + member.getModifiedBy());
     }
 }

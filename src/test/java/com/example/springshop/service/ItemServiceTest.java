@@ -2,8 +2,8 @@ package com.example.springshop.service;
 
 import com.example.springshop.constant.ItemSellStatus;
 import com.example.springshop.dto.ItemFormDto;
-import com.example.springshop.constant.entity.Item;
-import com.example.springshop.constant.entity.ItemImg;
+import com.example.springshop.entity.Item;
+import com.example.springshop.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
 import com.example.springshop.repository.ItemRepository2;
 import org.junit.jupiter.api.DisplayName;

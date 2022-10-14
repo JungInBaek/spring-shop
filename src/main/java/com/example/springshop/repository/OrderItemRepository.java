@@ -1,6 +1,6 @@
 package com.example.springshop.repository;
 
-import com.example.springshop.constant.entity.OrderItem;
+import com.example.springshop.entity.OrderItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,8 @@
-package com.example.springshop.constant.entity;
+package com.example.springshop.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
 import com.example.springshop.dto.ItemFormDto;
+import com.example.springshop.exception.OutOfStockException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item extends BaseEntity {
-
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;                        //  상품 코드
@@ -73,5 +73,13 @@ public class Item extends BaseEntity {
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+    }
+
+    public void removeStock(int stockNumber) {
+        int restStock = this.stockNumber - stockNumber;
+        if (restStock < 0) {
+            throw new OutOfStockException("상품의 재고가 부족합니다. (현재 재고 수량: " + this.stockNumber + ")");
+        }
+        this.stockNumber = restStock;
     }
 }

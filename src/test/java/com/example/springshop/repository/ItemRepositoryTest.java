@@ -1,7 +1,7 @@
 package com.example.springshop.repository;
 
 import com.example.springshop.constant.ItemSellStatus;
-import com.example.springshop.constant.entity.Item;
+import com.example.springshop.entity.Item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

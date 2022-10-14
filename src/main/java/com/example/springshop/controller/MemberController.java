@@ -1,7 +1,7 @@
 package com.example.springshop.controller;
 
 import com.example.springshop.dto.MemberFormDto;
-import com.example.springshop.constant.entity.Member;
+import com.example.springshop.entity.Member;
 import com.example.springshop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

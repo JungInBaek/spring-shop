@@ -2,7 +2,7 @@ package com.example.springshop.controller;
 
 import com.example.springshop.dto.ItemFormDto;
 import com.example.springshop.dto.ItemSearchDto;
-import com.example.springshop.constant.entity.Item;
+import com.example.springshop.entity.Item;
 import com.example.springshop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +69,21 @@ public class ItemController {
 
         return "item/itemForm";
     }
+
+    @GetMapping("/item/{itemId}")
+    public String itemDetail(Model model, @PathVariable("itemId") Long itemId) {
+        try {
+            ItemFormDto itemFormDto = itemService.getItemDetail(itemId);
+            model.addAttribute("itemFormDto", itemFormDto);
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
+            model.addAttribute("itemFormDto", new ItemFormDto());
+            return "item/itemForm";
+        }
+
+        return "item/itemForm";
+    }
+
     @PostMapping("/admin/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                              @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
@@ -101,4 +116,6 @@ public class ItemController {
 
         return "item/itemMng";
     }
+
+
 }

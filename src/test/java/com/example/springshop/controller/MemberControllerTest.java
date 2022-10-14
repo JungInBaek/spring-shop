@@ -1,7 +1,7 @@
 package com.example.springshop.controller;
 
 import com.example.springshop.dto.MemberFormDto;
-import com.example.springshop.constant.entity.Member;
+import com.example.springshop.entity.Member;
 import com.example.springshop.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class MemberControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Long createMember(String email, String password) {
+    public Member createMember(String email, String password) {
         MemberFormDto memberFormDto = new MemberFormDto();
         memberFormDto.setEmail(email);
         memberFormDto.setName("홍길동");
@@ -47,7 +47,7 @@ class MemberControllerTest {
     public void loginSuccessTest() throws Exception {
         String email = "test@email.com";
         String password = "1234";
-        this.createMember(email, password);
+        Member member = this.createMember(email, password);
         mockMvc.perform(
                 formLogin().userParameter("email")
                         .loginProcessingUrl("/members/login")

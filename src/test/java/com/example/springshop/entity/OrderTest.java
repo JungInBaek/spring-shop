@@ -1,10 +1,6 @@
 package com.example.springshop.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
-import com.example.springshop.constant.entity.Item;
-import com.example.springshop.constant.entity.Member;
-import com.example.springshop.constant.entity.Order;
-import com.example.springshop.constant.entity.OrderItem;
 import com.example.springshop.repository.ItemRepository;
 import com.example.springshop.repository.MemberRepository;
 import com.example.springshop.repository.OrderItemRepository;
