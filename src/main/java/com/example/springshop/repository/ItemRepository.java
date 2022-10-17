@@ -1,25 +1,71 @@
 package com.example.springshop.repository;
 
 import com.example.springshop.entity.Item;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+@Repository
+@RequiredArgsConstructor
+public class ItemRepository {
 
-    List<Item> findByItemName(String itemName);
+    private final EntityManager em;
 
-    List<Item> findByItemNameOrItemDetail(String itemName, String itemDetail);
+    public Item save(Item item) {
+        em.persist(item);
+        return em.find(Item.class, item.getId());
+    }
 
-    List<Item> findByPriceLessThan(Integer price);
+    public Item findOne(Long itemId) {
+        return em.find(Item.class, itemId);
+    }
 
-    List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);
+    public List<Item> findAll() {
+        return em.createQuery("select i from Item i", Item.class)
+                .getResultList();
+    }
 
-    @Query("select i from Item i where i.itemDetail like %:itemDetail% order by i.price desc")
-    List<Item> findByItemDetail(@Param("itemDetail") String itemDetail);
+    public Optional<Item> findById(Long itemId) {
+        return Optional.of(em.find(Item.class, itemId));
+    }
 
-    @Query(value = "select * from item i where i.item_detail like %:itemDetail% order by i.price desc", nativeQuery = true)
-    List<Item> findByItemDetailByNative(@Param("itemDetail") String itemDetail);
+    public List<Item> findByItemName(String itemName) {
+        return em.createQuery("select i from Item i where i.itemName = :itemName", Item.class)
+                .setParameter("itemName", itemName)
+                .getResultList();
+    }
+
+    public List<Item> findByItemNameOrItemDetail(String itemName, String itemDetail) {
+        return em.createQuery("select i from Item i where i.itemName = :itemName or i.itemDetail = :itemDetail", Item.class)
+                .setParameter("itemName", itemName)
+                .setParameter("itemDetail", itemDetail)
+                .getResultList();
+    }
+
+    public List<Item> findByPriceLessThan(Integer price) {
+        return em.createQuery("select i from Item i where i.price < :price", Item.class)
+                .setParameter("price", price)
+                .getResultList();
+    }
+
+    public List<Item> findByPriceLessThanOrderByPriceDesc(Integer price) {
+        return em.createQuery("select i from Item i where i.price < :price order by i.price desc", Item.class)
+                .setParameter("price", price)
+                .getResultList();
+    }
+
+    public List<Item> findByItemDetail(String itemDetail) {
+        return em.createQuery("select i from Item i where i.itemDetail like :itemDetail order by i.price desc", Item.class)
+                .setParameter("itemDetail", "%" + itemDetail + "%")
+                .getResultList();
+    }
+
+    public List<Item> findByItemDetailByNative(String itemDetail) {
+        return em.createNativeQuery("select * from item i where i.item_detail like :itemDetail order by i.price desc", Item.class)
+                .setParameter("itemDetail", "%" + itemDetail + "%")
+                .getResultList();
+    }
 }

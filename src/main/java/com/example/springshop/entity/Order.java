@@ -37,11 +37,6 @@ public class Order extends BaseEntity {
         this.member = member;
     }
 
-    public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
-
     public static Order createOrder(Member member, List<OrderItem> orderItemList) {
         Order order = new Order(member);
         for (OrderItem orderItem : orderItemList) {
@@ -53,6 +48,11 @@ public class Order extends BaseEntity {
         return order;
     }
 
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
     public int getTotalPrice() {
         int totalPrice = 0;
         for (OrderItem orderItem : orderItems) {
@@ -60,5 +60,12 @@ public class Order extends BaseEntity {
         }
 
         return totalPrice;
+    }
+
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.springshop.entity;
 
 import com.example.springshop.constant.ItemSellStatus;
-import com.example.springshop.repository.ItemRepository;
+import com.example.springshop.repository.ItemRepositorySpringDataJpa;
 import com.example.springshop.repository.MemberRepository;
 import com.example.springshop.repository.OrderItemRepository;
 import com.example.springshop.repository.OrderRepository;
@@ -33,7 +33,7 @@ class OrderTest {
     OrderItemRepository orderItemRepository;
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemRepositorySpringDataJpa itemRepository;
 
     @PersistenceContext
     EntityManager em;

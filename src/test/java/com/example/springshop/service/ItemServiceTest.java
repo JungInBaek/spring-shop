@@ -5,7 +5,7 @@ import com.example.springshop.dto.ItemFormDto;
 import com.example.springshop.entity.Item;
 import com.example.springshop.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
-import com.example.springshop.repository.ItemRepository2;
+import com.example.springshop.repository.ItemRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class ItemServiceTest {
     ItemService itemService;
 
     @Autowired
-    ItemRepository2 itemRepository;
+    ItemRepository itemRepository;
 
     @Autowired
     ItemImgRepository itemImgRepository;

@@ -7,7 +7,7 @@ import com.example.springshop.dto.MainItemDto;
 import com.example.springshop.entity.Item;
 import com.example.springshop.entity.ItemImg;
 import com.example.springshop.repository.ItemImgRepository;
-import com.example.springshop.repository.ItemRepository2;
+import com.example.springshop.repository.ItemRepository;
 import com.example.springshop.repository.ItemRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepositoryCustom itemRepositoryCustom;
-    private final ItemRepository2 itemRepository;
+    private final ItemRepository itemRepository;
     private final ItemImgRepository itemImgRepository;
     private final ItemImgService itemImgService;
 

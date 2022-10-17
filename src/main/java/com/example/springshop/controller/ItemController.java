@@ -74,14 +74,14 @@ public class ItemController {
     public String itemDetail(Model model, @PathVariable("itemId") Long itemId) {
         try {
             ItemFormDto itemFormDto = itemService.getItemDetail(itemId);
-            model.addAttribute("itemFormDto", itemFormDto);
+            model.addAttribute("item", itemFormDto);
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
-            model.addAttribute("itemFormDto", new ItemFormDto());
-            return "item/itemForm";
+            model.addAttribute("item", new ItemFormDto());
+            return "item/itemDetail";
         }
 
-        return "item/itemForm";
+        return "item/itemDetail";
     }
 
     @PostMapping("/admin/item/{itemId}")

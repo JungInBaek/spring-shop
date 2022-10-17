@@ -11,7 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_item_id")
     private Long id;
 
@@ -39,6 +40,14 @@ public class OrderItem extends BaseEntity {
         this.count = count;
     }
 
+    public int getTotalPrice() {
+        return orderPrice * count;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     //  테스트용
     public static OrderItem createOrderItem(Order order, Item item, int orderPrice, int count) {
         return new OrderItem(order, item, orderPrice, count);
@@ -52,11 +61,7 @@ public class OrderItem extends BaseEntity {
         return orderItem;
     }
 
-    public int getTotalPrice() {
-        return orderPrice * count;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
+    public void cancel() {
+        this.getItem().addStock(count);
     }
 }

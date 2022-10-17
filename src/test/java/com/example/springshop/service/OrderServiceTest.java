@@ -1,12 +1,13 @@
 package com.example.springshop.service;
 
 import com.example.springshop.constant.ItemSellStatus;
+import com.example.springshop.constant.OrderStatus;
 import com.example.springshop.dto.OrderDto;
 import com.example.springshop.entity.Item;
 import com.example.springshop.entity.Member;
 import com.example.springshop.entity.Order;
 import com.example.springshop.entity.OrderItem;
-import com.example.springshop.repository.ItemRepository2;
+import com.example.springshop.repository.ItemRepository;
 import com.example.springshop.repository.MemberRepository;
 import com.example.springshop.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,7 @@ class OrderServiceTest {
     private OrderRepository orderRepository;
 
     @Autowired
-    private ItemRepository2 itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -68,5 +69,24 @@ class OrderServiceTest {
         int totalPrice = orderDto.getCount() * item.getPrice();
 
         assertEquals(totalPrice, order.getTotalPrice());
+    }
+
+    @Test
+    @DisplayName("주문 취소 테스트")
+    public void cancelOrder() {
+        Item item = saveItem();
+        Member member = saveMember();
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCount(10);
+        orderDto.setItemId(item.getId());
+        Long orderId = orderService.order(orderDto, member.getEmail());
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        orderService.cancelOrder(orderId);
+
+        assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+        assertEquals(100, item.getStockNumber());
     }
 }

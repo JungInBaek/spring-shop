@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ItemRepositoryTest {
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemRepositorySpringDataJpa itemRepository;
 
     @Test
     @DisplayName("상품 저장 테스트")
