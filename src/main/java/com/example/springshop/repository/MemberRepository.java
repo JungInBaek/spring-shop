@@ -30,16 +30,13 @@ public class MemberRepository {
     }
 
     public Member findByEmail(String email) {
-        Member findMember;
         try {
-            findMember = em.createQuery("select m from Member m where m.email = :email", Member.class)
+            return em.createQuery("select m from Member m where m.email = :email", Member.class)
                     .setParameter("email", email)
                     .getResultList().stream().findAny().get();
         } catch(NoSuchElementException e) {
-            findMember = null;
+            return null;
         }
-
-        return findMember;
     }
 
     public Optional<Member> findById(Long memberId) {
