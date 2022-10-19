@@ -58,4 +58,8 @@ public class CartItemRepository {
                 .setParameter("cartId", cartId)
                 .getResultList();
     }
+
+    public void delete(CartItem cartItem) {
+        em.remove(cartItem);
+    }
 }

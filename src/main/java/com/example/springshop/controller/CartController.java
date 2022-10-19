@@ -22,6 +22,16 @@ public class CartController {
 
     private final CartService cartService;
 
+    @GetMapping("/cart")
+    public String cart(Principal principal, Model model) {
+        String email = principal.getName();
+        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
+
+        model.addAttribute("cartItems", cartDetailDtoList);
+
+        return "cart/cartList";
+    }
+
     @PostMapping("/cart")
     public @ResponseBody ResponseEntity cart(@RequestBody @Valid CartItemDto cartItemDto,
                                              BindingResult bindingResult, Principal principal) {
@@ -46,16 +56,6 @@ public class CartController {
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
-    @GetMapping("/cart")
-    public String cart(Principal principal, Model model) {
-        String email = principal.getName();
-        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
-
-        model.addAttribute("cartItems", cartDetailDtoList);
-
-        return "cart/cartList";
-    }
-
     @PatchMapping("/cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity updateCartItem(
             @PathVariable("cartItemId") Long cartItemId, int count, Principal principal) {
@@ -67,6 +67,19 @@ public class CartController {
         }
 
         cartService.updateCartItemCount(cartItemId, count);
+
+        return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cartItem/{cartItemId}")
+    public @ResponseBody ResponseEntity deleteCartItem(
+            @PathVariable("cartItemId") Long cartItemId, Principal principal) {
+
+        if (!cartService.validateCartItem(cartItemId, principal.getName())) {
+            return new ResponseEntity<String>("수정 권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+
+        cartService.deleteCartItem(cartItemId);
 
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
