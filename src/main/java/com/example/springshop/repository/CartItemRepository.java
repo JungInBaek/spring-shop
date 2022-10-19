@@ -1,10 +1,13 @@
 package com.example.springshop.repository;
 
+import com.example.springshop.dto.CartDetailDto;
+import com.example.springshop.dto.CartItemDto;
 import com.example.springshop.entity.CartItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -42,4 +45,17 @@ public class CartItemRepository {
                 .getResultStream().findAny();
     }
 
+    public List<CartDetailDto> findCartDetailDtoList(Long cartId) {
+        String jpql = "select new com.example.springshop.dto.CartDetailDto(ci.id, i.itemName, i.price, ci.count, ii.imgUrl) " +
+                "from CartItem ci, ItemImg ii " +
+                "join ci.item i " +
+                "where ci.cart.id = :cartId " +
+                "and ii.item.id = ci.item.id " +
+                "and ii.repImgYn = 'Y' " +
+                "order by ci.regTime desc";
+
+        return em.createQuery(jpql, CartDetailDto.class)
+                .setParameter("cartId", cartId)
+                .getResultList();
+    }
 }
