@@ -2,6 +2,7 @@ package com.example.springshop.controller;
 
 import com.example.springshop.dto.CartDetailDto;
 import com.example.springshop.dto.CartItemDto;
+import com.example.springshop.dto.CartOrderDto;
 import com.example.springshop.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class CartController {
     }
 
     @PostMapping("/cart")
-    public @ResponseBody ResponseEntity cart(@RequestBody @Valid CartItemDto cartItemDto,
+    public @ResponseBody ResponseEntity addCart(@RequestBody @Valid CartItemDto cartItemDto,
                                              BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
@@ -61,9 +62,9 @@ public class CartController {
             @PathVariable("cartItemId") Long cartItemId, int count, Principal principal) {
 
         if (count <= 0) {
-            return new ResponseEntity<String>("최소 1개 이상 담아주세요", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("최소 1개 이상 담아주세요.", HttpStatus.BAD_REQUEST);
         } else if (!cartService.validateCartItem(cartItemId, principal.getName())) {
-            return new ResponseEntity<String>("수정 권한이 없습니다", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
         cartService.updateCartItemCount(cartItemId, count);
@@ -76,11 +77,32 @@ public class CartController {
             @PathVariable("cartItemId") Long cartItemId, Principal principal) {
 
         if (!cartService.validateCartItem(cartItemId, principal.getName())) {
-            return new ResponseEntity<String>("수정 권한이 없습니다", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
         cartService.deleteCartItem(cartItemId);
 
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
+
+    @PostMapping("/cart/orders")
+    public @ResponseBody ResponseEntity orderCartItem(
+            @RequestBody CartOrderDto cartOrderDto, Principal principal) {
+
+        List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
+
+        if (cartOrderDtoList == null || cartOrderDtoList.size() == 0) {
+            return new ResponseEntity<String>("주문할 상품을 선택해주세요.", HttpStatus.BAD_REQUEST);
+        }
+
+        for (CartOrderDto cartOrder : cartOrderDtoList) {
+            if (!cartService.validateCartItem(cartOrder.getCartItemId(), principal.getName())) {
+                return new ResponseEntity<String>("주문 권한이 없습니다", HttpStatus.FORBIDDEN);
+            }
+        }
+
+        Long orderId = cartService.orderCartItem(cartOrderDtoList, principal.getName());
+
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 }
