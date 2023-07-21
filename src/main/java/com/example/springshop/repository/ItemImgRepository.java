@@ -14,7 +14,6 @@ public class ItemImgRepository {
 
     private final EntityManager em;
 
-
     public void save(ItemImg itemImg) {
         em.persist(itemImg);
     }
